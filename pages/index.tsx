@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { FormEvent, useContext, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { AuthContext } from "./contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
