@@ -1,24 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🔒 Next Auth with JWT
+<p align="center">
+  <img alt="Print do projeto" src=".github/img.jpg" width="100%">
+</p>
 
-## Getting Started
+### Projeto criado no treinamento Ignite da Rocketseat, podendo ser usado em qualquer sistema que necessite de autenticação um pouco mais sobusta.
 
-First, run the development server:
+## ➡️ Sobre 
+O projeto possui o objetivo de criar um sistema de autenticação com next.js, tendo validações tanto no browser como no server side. Possui várias validações de erros e segurança. São utilizado Cookies para armazenar os Tokens e Refresh Tokens vindos do servidor. Também possui controle de permissão e de cargos, que protege páginas e também componentes individuais, além de Toasts para feedbacks ao usuário.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Tecnologias 
+-   [x] Next.js
+-   [x] Typescript
+-   [x] nookies
+-   [x] axios
+-   [x] jwt-decode
+-   [x] react-hot-toast
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 🚀 Como rodar o código
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+#### Clone o [repositório do backend](https://github.com/pedropaulodf/ignite-reactjs-auth-backend):
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```git clone https://github.com/pedropaulodf/ignite-reactjs-auth-backend.git```
 
-## Learn More
+E depois de clonado, rode o comando: ``yarn dev``
+
+O servidor roda na **porta: 3333** do localhost.
+
+#### Após o clone do backend, clone este repositório e rode o comando:
+
+```git clone https://github.com/pedropaulodf/next-autenticacao-jwt.git```
+
+```yarn dev```
+
+A aplicação roda na porta **default: 3000** do localhost.
+
+## Learn More about Next.js
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -27,8 +44,3 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
