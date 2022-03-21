@@ -15,7 +15,8 @@ type SignInCredentials = {
 };
 
 type AuthContextData = {
-  signIn(credentials: SignInCredentials): Promise<void>;
+  signIn: (credentials: SignInCredentials) => Promise<void>;
+  signOut: () => void;
   isAuthenticated: boolean;
   user: User;
 };
@@ -27,10 +28,14 @@ type AuthProviderProps = {
 // Aqui eu seto o tipo das props que vão sair no value do Provider do Context
 export const AuthContext = createContext({} as AuthContextData);
 
+let authChannel: BroadcastChannel;
+
 //DESLOGAR O USUÁRIO
 export function signOut() {
   destroyCookie(undefined, "nextauth.token");
   destroyCookie(undefined, "nextauth.refreshToken");
+
+  authChannel.postMessage("signOut");
 
   Router.push("/");
 }
@@ -38,6 +43,26 @@ export function signOut() {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    authChannel = new BroadcastChannel("auth");
+    authChannel.onmessage = () => document.location.reload();
+    // authChannel.onmessage = (message) => {
+    //   console.log(message.data);
+    //   switch (message.data) {
+    //     case "signOut":
+    //       signOut();]
+    //       // authChannel.close();
+    //       break;
+    //     case "signIn":
+    //       // Router.push('/dashboard');
+    //       window.location.replace("http://localhost:3000/dashboard");
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // };
+  }, []);
 
   // BUSCA AS ROLES E PERMISSIONS DO USUÁRIO TODA VEZ QUE ELE LOGAR
   useEffect(() => {
@@ -53,7 +78,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         })
         .catch(() => {
           //DESLOGAR O USUÁRIO
-          signOut()
+          signOut();
         });
     }
   }, []);
@@ -92,13 +117,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api.defaults.headers["Authorization"] = `Bearer ${JWToken}`;
 
       Router.push("/dashboard");
+
+      authChannel.postMessage("signIn");
     } catch (err) {
       console.log(err);
     }
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   );
