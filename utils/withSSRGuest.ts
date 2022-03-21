@@ -7,7 +7,7 @@ export function withSSRGuest<P>(fn: GetServerSideProps<P>) {
     const cookies = parseCookies(ctx);
 
     // Se o usuário estiver logado, direciona ele para a tela principal
-    if (cookies["nextauth.token"]) {
+    if (cookies[process.env.NAME_JWT_TOKEN]) {
       return {
         redirect: {
           destination: "/dashboard",

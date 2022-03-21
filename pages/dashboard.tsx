@@ -1,3 +1,4 @@
+import Router from "next/router";
 import { useContext, useEffect } from "react";
 import { Can } from "../components/Can";
 import { AuthContext } from "../contexts/AuthContext";
@@ -16,21 +17,26 @@ export default function Dashboard() {
   useEffect(() => {
     api
       .get("/me")
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
+      .then((response) => console.log("Response:",response))
+      .catch((err) => console.log("Error:",err));
   }, []);
 
   return (
-    <>
-      <h1>Dashboard: {user?.email} </h1>
+    <div className="container">
+      <div>
+        <h1>Dashboard</h1>
+        <h2>User: {user?.email} </h2>
 
-      <button onClick={signOut} >Sign Out</button>
+        <button onClick={signOut} style={{backgroundColor: "#ff6b6b"}}>Sign Out ➡️</button>
 
-      {/* {userCanSeeMetrics && <div>Metrics</div>} */}
-      <Can permissions={['metrics.list']}>
-        <div>Metrics</div>
-      </Can>
-    </>
+        {/* {userCanSeeMetrics && <div>Metrics</div>} */}
+        <Can permissions={['metrics.list']}>
+          <div style={{margin: "20px 0", padding: "4px 8px", border: "1px solid green", color: "green", borderRadius: "50px", textAlign: "center"}}>This user is allowed to see the Metrics!</div>
+          
+          <button onClick={() => Router.push('/metrics')}>GO TO METRICS</button>
+        </Can>
+      </div>
+    </div>
   );
 }
 

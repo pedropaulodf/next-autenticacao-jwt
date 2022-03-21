@@ -2,6 +2,7 @@ import Router from "next/router";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { api } from "../services/apiClient";
+import { showToast } from "../utils/utils";
 
 type User = {
   email: string;
@@ -32,12 +33,13 @@ let authChannel: BroadcastChannel;
 
 //DESLOGAR O USUÁRIO
 export function signOut() {
-  destroyCookie(undefined, "nextauth.token");
-  destroyCookie(undefined, "nextauth.refreshToken");
+  destroyCookie(undefined, process.env.NAME_JWT_TOKEN);
+  destroyCookie(undefined, process.env.NAME_JWT_REFRESH_TOKEN);
 
   authChannel.postMessage("signOut");
 
   Router.push("/");
+  showToast("success","Logged out successfully");
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -66,7 +68,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // BUSCA AS ROLES E PERMISSIONS DO USUÁRIO TODA VEZ QUE ELE LOGAR
   useEffect(() => {
-    const { "nextauth.token": JWToken } = parseCookies();
+    const { [process.env.NAME_JWT_TOKEN]: JWToken } = parseCookies();
 
     if (JWToken) {
       api
@@ -102,11 +104,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // cookies <-
 
       // SETA OS TOKENS NOS COOKIES
-      setCookie(undefined, "nextauth.token", JWToken, {
+      setCookie(undefined, process.env.NAME_JWT_TOKEN, JWToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 dias
         path: "/", // Qualquer endereço do app vai ter acesso
       });
-      setCookie(undefined, "nextauth.refreshToken", refreshToken, {
+      setCookie(undefined, process.env.NAME_JWT_REFRESH_TOKEN, refreshToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 dias
         path: "/", // Qualquer endereço do app vai ter acesso
       });
@@ -119,8 +121,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       Router.push("/dashboard");
 
       authChannel.postMessage("signIn");
+
+      showToast("success","You are logged in!");
     } catch (err) {
-      console.log(err);
+      // console.log(err.response);
+      showToast("error",`${err.response.data.message}`);
     }
   }
 

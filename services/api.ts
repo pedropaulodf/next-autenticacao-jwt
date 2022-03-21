@@ -14,7 +14,7 @@ export function setupAPICLient(ctx = undefined) {
   const api = axios.create({
     baseURL: "http://localhost:3333",
     headers: {
-      Authorization: `Bearer ${cookies["nextauth.token"]}`,
+      Authorization: `Bearer ${cookies[process.env.NAME_JWT_TOKEN]}`,
     },
   });
 
@@ -29,7 +29,7 @@ export function setupAPICLient(ctx = undefined) {
           // renovar o token
           cookies = parseCookies(ctx);
 
-          const { "nextauth.refreshToken": refreshToken } = cookies;
+          const { [process.env.NAME_JWT_REFRESH_TOKEN]: refreshToken } = cookies;
 
           const originalConfig = error.config;
 
@@ -42,13 +42,13 @@ export function setupAPICLient(ctx = undefined) {
                 const { token: JWToken } = response.data;
 
                 // SETA OS TOKENS NOS COOKIES
-                setCookie(ctx, "nextauth.token", JWToken, {
+                setCookie(ctx, process.env.NAME_JWT_TOKEN, JWToken, {
                   maxAge: 60 * 60 * 24 * 30, // 30 dias
                   path: "/", // Qualquer endereço do app vai ter acesso
                 });
                 setCookie(
                   ctx,
-                  "nextauth.refreshToken",
+                  process.env.NAME_JWT_REFRESH_TOKEN,
                   response.data.refreshToken,
                   {
                     maxAge: 60 * 60 * 24 * 30, // 30 dias

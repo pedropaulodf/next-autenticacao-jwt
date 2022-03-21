@@ -14,3 +14,31 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.container {
+  height: 100vh;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 500px;
+  margin: auto;
+}
+
+button {
+  border: none;
+  padding: 12px 20px;
+  font-size: 20px;
+  background-color: rgb(165, 141, 62);
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 0px 5px 8px 3px #00000025;
+  transition: transform 0.2s;
+}
+
+button:active {
+  transform: translateY(5px);
+}

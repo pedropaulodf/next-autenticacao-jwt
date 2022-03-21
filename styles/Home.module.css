@@ -1,18 +1,20 @@
-.container {
-  height: 100vh;
+
+.headline {
   padding: 0 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  text-align: center;
 }
 
-.main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.input{
+  border: none;
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  width: 100%;
+  background-color: rgb(219, 219, 219);
+  border-radius: 3px;
+}
+
+.button {
+  width: 100%;
+  background-color: rgb(26, 138, 26);
 }
