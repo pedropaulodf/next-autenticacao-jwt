@@ -31,7 +31,7 @@ O servidor roda na **porta: 3333** do localhost.
 
 ```git clone https://github.com/pedropaulodf/next-autenticacao-jwt.git```
 
-```yarn dev```
+Entre na pasta do projeto e rode: ``yarn dev``
 
 A aplicação roda na porta **default: 3000** do localhost.
 
